@@ -1,8 +1,8 @@
 {
   "@context": "http://clowder.ncsa.illinois.edu/contexts/extractors.jsonld",
-  "name": "ncsa.workbench.sidecar",
+  "name": "ncsa.workbench.connector",
   "version": "1.0.0",
-  "description": "Use Clowder's extractor framework to move files into NDS Labs Workbench containers.",
+  "description": "Use Clowder's extractor framework to move files into Labs Workbench containers.",
   "author": "Max Burnette <mburnet2@illinois.edu>",
   "contributors": [],
   "contexts": [],
@@ -13,14 +13,15 @@
     },
     {
       "repType": "docker",
-      "repUrl": "clowder/extractors-workbench-sidecar"
+      "repUrl": "clowder/extractors-workbench-connector"
     }
   ],
   "external_services": [],
-  "process": {},
+  "process": {
+  },
   "dependencies": [],
   "bibtex": [
     ""
   ],
-  "labels": []
+  "categories": []
 }
