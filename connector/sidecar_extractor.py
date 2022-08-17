@@ -20,16 +20,13 @@ class WorkbenchSidecar(Extractor):
 
     # Check whether dataset already has metadata
     def check_message(self, connector, host, secret_key, resource, parameters):
-        # TODO: Return bypass and download it directly to destination ourselves
         return CheckMessage.bypass
 
     def process_message(self, connector, host, secret_key, resource, parameters):
         logger = logging.getLogger('__main__')
 
         home_dir = os.getenv('NDSLABS_HOME', "/home/worksman")
-
-        # TODO: Need to determine this from resource object
-        type="file"
+        type = resource["type"]
 
         if type=="file":
             dest = os.path.join(home_dir, resource["name"])
