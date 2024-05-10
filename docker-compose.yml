@@ -2,6 +2,10 @@ version: '3.10'
 
 services:
   workbench-connector:
-    image: "bodom0015/clowder-extractors-workbench"
+    image: "ndslabs/clowder-extractors-workbench"
     build:
       context: .
+    env_file:
+      - .env
+    volumes:
+      - ./downloads:/home/worksman
