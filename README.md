@@ -43,6 +43,3 @@ Docker:
 docker build -t ndslabs/clowder-extractors-workbench .
 ```
 
-# TODOs
-
-* add default .env file for local testing
