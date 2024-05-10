@@ -20,20 +20,30 @@ class WorkbenchSidecar(Extractor):
 
     # Check whether dataset already has metadata
     def check_message(self, connector, host, secret_key, resource, parameters):
+        # TODO: Return bypass and download it directly to destination ourselves
         return CheckMessage.bypass
 
     def process_message(self, connector, host, secret_key, resource, parameters):
         logger = logging.getLogger('__main__')
 
         home_dir = os.getenv('NDSLABS_HOME', "/home/worksman")
-        type = resource["type"]
+        secret_key = os.getenv('SECRET_KEY', secret_key)
+
+        headers = {'X-API-KEY': secret_key}
+        file_id = resource['id']
+
+        # TODO: Need to determine this from resource object
+        type="file"
 
         if type=="file":
             dest = os.path.join(home_dir, resource["name"])
             logger.info("Downloading %s " % dest)
+            
+            #version = 1
+            #dataset_id = resource['dataset_id']
+            url = f'{host}api/v2/files/{file_id}?increment=false'   # &dataset_id={dataset_id}'
 
-            url = '%sapi/files/%s?key=%s' % (host, resource['id'], secret_key)
-            result = connector.get(url, stream=True, verify=connector.ssl_verify if connector else True)
+            result = connector.get(url, stream=True, headers=headers, verify=connector.ssl_verify if connector else True)
             try:
                 with open(dest, "wb") as outputfile:
                     for chunk in result.iter_content(chunk_size=10*1024):
@@ -46,8 +56,8 @@ class WorkbenchSidecar(Extractor):
                 dest = os.path.join(home_dir, f["filename"])
                 logger.info("Downloading %s " % dest)
 
-                url = '%sapi/files/%s?key=%s' % (host, f['id'], secret_key)
-                result = connector.get(url, stream=True, verify=connector.ssl_verify if connector else True)
+                url = f'{host}api/v2/files/{file_id}?increment=false'
+                result = connector.get(url, stream=True, headers=headers, verify=connector.ssl_verify if connector else True)
                 try:
                     with open(dest, "wb") as outputfile:
                         for chunk in result.iter_content(chunk_size=10*1024):

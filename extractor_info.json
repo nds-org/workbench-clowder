@@ -18,6 +18,7 @@
   ],
   "external_services": [],
   "process": {
+    "file": [ "text/*", "application/json" ]
   },
   "dependencies": [],
   "bibtex": [
